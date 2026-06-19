@@ -296,7 +296,7 @@ def current_tab():
     return {"targetId": r["targetId"], "url": r["url"], "title": r["title"]}
 
 def _mark_tab():
-    """Prepend 🐴 to tab title so the user can see which tab the agent controls."""
+    """Prepend horse emoji to tab title so the user can see which tab the agent controls."""
     try: cdp("Runtime.evaluate", expression="if(!document.title.startsWith('\U0001F434'))document.title='\U0001F434 '+document.title")
     except Exception: pass
 
@@ -304,7 +304,7 @@ def switch_tab(target):
     # Accept either a raw targetId string or the dict returned by current_tab() / list_tabs(),
     # so `switch_tab(current_tab())` works without a manual ["targetId"] dance.
     target_id = target.get("targetId") if isinstance(target, dict) else target
-    # Unmark old tab. 🐴 is a surrogate pair in JS UTF-16 strings (2 code units),
+    # Unmark old tab. Horse emoji is a surrogate pair in JS UTF-16 strings (2 code units),
     # plus the trailing space = 3 code units, so slice(3) cleanly removes the prefix.
     try: cdp("Runtime.evaluate", expression="if(document.title.startsWith('\U0001F434 '))document.title=document.title.slice(3)")
     except Exception: pass
@@ -323,6 +323,15 @@ def new_tab(url="about:blank"):
     if url != "about:blank":
         goto_url(url)
     return tid
+
+def close_tab(target=None):
+    """Close a tab. If `target` is omitted, closes the currently attached tab.
+    Accepts a raw targetId string or a dict from list_tabs()/current_tab()."""
+    target_id = target.get("targetId") if isinstance(target, dict) else target
+    if target_id is None:
+        target_id = current_tab()["targetId"]
+    cdp("Target.closeTarget", targetId=target_id)
+
 
 def ensure_real_tab():
     """Switch to a real user tab if current is chrome:// / internal / stale."""
