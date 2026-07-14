@@ -1,3 +1,13 @@
+> # ⚠️ ARCHIVED — do not build on this fork
+>
+> This fork was **46 commits behind** upstream and **5 ahead — all five pure markdown**
+> (583 insertions, zero code). There was never anything to maintain.
+>
+> - Domain skills now live in SmartSocial at `agents/bob/domain-skills/`.
+> - The harness is consumed as a **pinned upstream release** (`browser-harness==0.1.5`).
+>
+> See [ARCHIVED.md](./ARCHIVED.md). Upstream: https://github.com/browser-use/browser-harness
+
 <img src="https://raw.githubusercontent.com/browser-use/media/main/browser-harness/banner-ink.svg" alt="Browser Harness" width="100%" />
 
 # Browser Harness ♞
